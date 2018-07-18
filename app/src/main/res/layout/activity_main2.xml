@@ -5,14 +5,15 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".Main2Activity">
+    tools:context=".Main2Activity"
+    android:background="@drawable/bg_2">
 
     <Button
         android:id="@+id/closeBtn"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:layout_marginRight="165sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginRight="155sp"
+        android:layout_marginTop="10sp"
         android:background="@drawable/ic_close_black_24dp"
         android:onClick="closeBtnClick" />
 
@@ -67,9 +68,9 @@
             android:id="@+id/previousBtn"
             android:layout_width="30sp"
             android:layout_height="30sp"
-            android:layout_marginLeft="130sp"
+            android:layout_marginLeft="100sp"
             android:layout_marginRight="100sp"
-            android:layout_marginTop="40sp"
+            android:layout_marginTop="20sp"
             android:background="@drawable/ic_skip_previous_black_24dp"
             android:onClick="previousBtnClick"/>
 
@@ -78,8 +79,8 @@
             android:layout_width="30sp"
             android:layout_height="30sp"
             android:layout_marginLeft="-66sp"
-            android:layout_marginRight="0sp"
-            android:layout_marginTop="40sp"
+            android:layout_marginRight="6sp"
+            android:layout_marginTop="20sp"
             android:background="@drawable/ic_play_arrow_black_24dp"
             android:onClick="playBtnClick" />
 
@@ -88,7 +89,7 @@
             android:layout_width="30sp"
             android:layout_height="30sp"
             android:layout_marginLeft="30sp"
-            android:layout_marginTop="40sp"
+            android:layout_marginTop="20sp"
             android:background="@drawable/ic_skip_next_black_24dp"
             android:onClick="nextBtnClick"/>
 
@@ -97,7 +98,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40sp"
+        android:layout_marginTop="20sp"
         android:gravity="center"
         android:orientation="horizontal">
 

@@ -7,7 +7,9 @@
     <TextView
         android:id="@+id/Song"
         android:text="song1"
-        android:textSize="35sp"
+        android:textSize="30sp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

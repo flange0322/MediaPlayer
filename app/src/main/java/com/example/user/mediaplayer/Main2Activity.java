@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -44,6 +45,8 @@ public class Main2Activity extends AppCompatActivity {
         elapsedTimeLabel = findViewById(R.id.elapsedTimeLabel);
         remainingTimeLabel = findViewById(R.id.remainingTimeLabel);
         songNameTitle = findViewById(R.id.songName);
+        positionBar = findViewById(R.id.positionBar);
+        volumeBar = findViewById(R.id.volumeBar);
 
         songIdKeeper = getIntent().getExtras();
         id = songIdKeeper.getInt("songId");
@@ -60,35 +63,8 @@ public class Main2Activity extends AppCompatActivity {
         System.out.println(songCount);
         System.out.println(countSong);*/
 
-        mp = MediaPlayer.create(this,id);
-        mp.setLooping(false);
-        mp.seekTo(0);
-        mp.setVolume(0.5f,0.5f);
-        totalTime = mp.getDuration();
-        changePlayandStop();
-        positionBar = findViewById(R.id.positionBar);
-        positionBar.setMax(totalTime);
-        positionBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if(b){
-                    mp.seekTo(i);
-                    positionBar.setProgress(i);
-                }
-            }
+        MediaPlayersetting();
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        volumeBar = findViewById(R.id.volumeBar);
         volumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -115,7 +91,7 @@ public class Main2Activity extends AppCompatActivity {
                         Message msg = new Message();
                         msg.what = mp.getCurrentPosition();
                         handler.sendMessage(msg);
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                     }
                 }
@@ -133,8 +109,51 @@ public class Main2Activity extends AppCompatActivity {
 
             String remainingTime = createTimeLabel(totalTime-currentPosition);
             remainingTimeLabel.setText("- " + remainingTime);
+            OnCompletion();
         }
     };
+
+    public void MediaPlayersetting(){
+        mp = MediaPlayer.create(this,id);
+        mp.setLooping(false);
+        mp.seekTo(0);
+        mp.setVolume(0.5f,0.5f);
+        totalTime = mp.getDuration();
+        Bar(totalTime);
+        changePlayandStop();
+    }
+
+    public void OnCompletion(){
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                nextBtnClick(null);
+            }
+        });
+    }
+
+    public void Bar(int totalTime){
+        positionBar.setMax(totalTime);
+        positionBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if(b){
+                    mp.seekTo(i);
+                    positionBar.setProgress(i);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
 
     public String createTimeLabel(int time){
         String timeLabel = "";
@@ -183,12 +202,7 @@ public class Main2Activity extends AppCompatActivity {
            /*System.out.println(id);
             System.out.println(countSong);*/
 
-            mp = MediaPlayer.create(this,id);
-            mp.setLooping(false);
-            mp.seekTo(0);
-            mp.setVolume(0.5f,0.5f);
-            totalTime = mp.getDuration();
-            changePlayandStop();
+            MediaPlayersetting();
         }
     }
 
@@ -204,13 +218,7 @@ public class Main2Activity extends AppCompatActivity {
 
             /*System.out.println(id);
             System.out.println(countSong);*/
-
-            mp = MediaPlayer.create(this, id);
-            mp.setLooping(false);
-            mp.seekTo(0);
-            mp.setVolume(0.5f, 0.5f);
-            totalTime = mp.getDuration();
-            changePlayandStop();
+            MediaPlayersetting();
         }
         else{
             countSong = songCount-1;
@@ -220,14 +228,15 @@ public class Main2Activity extends AppCompatActivity {
 
           /*System.out.println(id);
             System.out.println(countSong);*/
-
-            mp = MediaPlayer.create(this, id);
-            mp.setLooping(false);
-            mp.seekTo(0);
-            mp.setVolume(0.5f, 0.5f);
-            totalTime = mp.getDuration();
-            changePlayandStop();
+            MediaPlayersetting();
         }
     }
-}
 
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+}

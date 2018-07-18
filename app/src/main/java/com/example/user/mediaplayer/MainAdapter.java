@@ -31,7 +31,7 @@ public class MainAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        ((ItemHolder)holder).textView.setText(mSongName.get(position).mSongname);
+        ((ItemHolder)holder).textView.setText(String.valueOf(position+1)+"."+mSongName.get(position).mSongname);
     }
 
     @Override
